@@ -11,7 +11,7 @@ tripController.createTrips = (req, res, next) => {
   VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
   `
 
-  db.query(query, [name, destination, groupID, createdBy, dateStart, dateEnd, uuidv4(),  '{CreatedBYID}'])
+  db.query(query, [name, destination, groupID, createdBy, dateStart, dateEnd, uuidv4(), `${createdBy}`])
     .then((data) => res.json(data)).catch((e) => { console.log(e) })
 }
 
@@ -51,11 +51,8 @@ tripController.removeMember = (req, res, next) => {
 
   db.query(getQuery).then((data) => {
     const memberIndex = data.rows[0].members.indexOf(memberUUID)
-    console.log(memberIndex)
     const newArr = data.rows[0].members
     newArr.splice(memberIndex, 1)
-
-    console.log(newArr)
 
     const query = `
     UPDATE trip
