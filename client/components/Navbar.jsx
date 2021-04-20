@@ -5,22 +5,20 @@ import { withRouter } from 'react-router';
 import { withStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
-import Box from '@material-ui/core/Box';
 
-const styles = (theme) => ({
-  root: {
-    flexGrow: 1,
-  },
-  menuButton: {
-    marginRight: theme.spacing(2),
-  },
-  title: {
-    flexGrow: 1,
-  },
-});
+// const styles = (theme) => ({
+//   root: {
+//     flexGrow: 1,
+//   },
+//   menuButton: {
+//     marginRight: theme.spacing(2),
+//   },
+//   title: {
+//     flexGrow: 1,
+//   },
+// });
 
 const mapStateToProps = (state) => ({
   user: state.auth.user,
@@ -51,6 +49,5 @@ export class Navbar extends Component {
   }
 }
 
-export default withStyles(styles, { withTheme: true })(
-  withRouter(connect(mapStateToProps, mapDispatchToProps)(Navbar))
-);
+export default 
+  withRouter(connect(mapStateToProps, mapDispatchToProps)(Navbar));

@@ -1,6 +1,7 @@
-;
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import * as actions from './actions/actions.js';
+import Paper from '@material-ui/core/Paper';
+
 
 const mapStateToProps = (state) => ({
   

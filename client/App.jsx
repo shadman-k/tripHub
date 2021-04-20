@@ -10,7 +10,7 @@ import {
 
 import NavBar from './components/Navbar.jsx';
 import HomeContainer from './containers/HomeContainer.jsx';
-import TripContainer from './containers/tripContainer.jsx';
+import TripContainer from './containers/TripContainer.jsx';
 
 import './styles/combined.scss';
 
@@ -29,18 +29,20 @@ class App extends Component {
 
   render() {
     return (
-      <Router>
-        <NavBar/>
-        <p>tripHub</p>
-        <p>{this.props.user}</p>
-        <button onClick={() => this.props.auth(true)}>click me</button>
-
-        <Switch>
-          <Route path='/home'>
-            Home Page
-          </Route>
-        </Switch>
-      </Router>
+      <div className='main-container'>
+        <div className='content-wrap'>
+          <Router>
+            <div className='nav-bar-wrap'>
+              <NavBar/>
+            </div>
+            <Switch>
+              <Route path='/home'>
+                <HomeContainer />
+              </Route>
+            </Switch>
+          </Router>
+        </div>
+      </div>
     )
   }
 }

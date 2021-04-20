@@ -1,5 +1,5 @@
 .nav-bar{
-
+  width: 100%;
   a {
     margin-left: 3rem;
     font-size: 16px;
@@ -14,4 +14,14 @@
   p {
     margin-left: auto;
   }
+}
+
+.nav-bar-wrap {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: row;
+  flex-direction: row;
 }
