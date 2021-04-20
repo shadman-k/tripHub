@@ -10,7 +10,9 @@ const useStyles = makeStyles({
   root: {
     minWidth: 275,
     margin: 10,
-    width: 100
+    minHeight: 300,
+    display: 'flex',
+    flexDirection: 'column'
   },
   bullet: {
     display: 'inline-block',

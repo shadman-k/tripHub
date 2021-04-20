@@ -4,6 +4,7 @@ import { withStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 
 import TripCard from '../components/TripCard.jsx';
+import NewTrip from '../components/NewTrip.jsx'
 
 const mapStateToProps = (state) => ({
   
@@ -16,7 +17,7 @@ const mapDispatchToProps = {
 export class homeContainer extends Component {
   render() {
     let trips = [];
-    for(let i = 0; i < 29; i++){
+    for(let i = 0; i < 4; i++){
       trips.push(<TripCard />);
     }
     return (
@@ -25,6 +26,7 @@ export class homeContainer extends Component {
         <Paper className='all-trips-paper'> 
           <div className='trip-grid'>
             {trips}
+            <NewTrip />
           </div>
         </Paper>
       </div>
