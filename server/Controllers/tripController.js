@@ -18,13 +18,50 @@ tripController.createTrips = (req, res, next) => {
 tripController.addMember = (req, res, next) => {
   const { memberUUID, trip_ID } = req.body;
 
-  const query = `
-  UPDATE trip
-  SET members = ${memberUUID}
-  WHERE trip_ID = ${trip_ID}
+  const getQuery = `
+   SELECT *
+   FROM trip
+   WHERE trip_ID = '${trip_ID}'
   `
 
-  db.query(query).then((data) => {res.json(data)}).catch((e) => {console.log(e)})
+  db.query(getQuery).then((data) => {
+    const members = data.rows[0].members.length
+
+    const query = `
+    UPDATE trip
+    SET members[${members+1}] = '${memberUUID}'
+    WHERE trip_ID = '${trip_ID}'
+  `
+    db.query(query)
+      .then((data) => { res.json(data) })
+      .catch((e) => { console.log(e) })
+
+  }).catch((e) => { console.log(e) })
+
+}
+
+tripController.removeMember = (req, res, next) => {
+  const { memberUUID, trip_ID } = req.body;
+
+  const getQuery = `
+   SELECT *
+   FROM trip
+   WHERE trip_ID = '${trip_ID}'
+  `
+
+  db.query(getQuery).then((data) => {
+    const members = data.rows[0].members.length
+
+    const query = `
+    UPDATE trip
+    SET members[${members+1}] = '${memberUUID}'
+    WHERE trip_ID = '${trip_ID}'
+  `
+    db.query(query)
+      .then((data) => { res.json(data) })
+      .catch((e) => { console.log(e) })
+
+  }).catch((e) => { console.log(e) })
 
 }
 
@@ -44,7 +81,9 @@ tripController.getTripsOne = (req, res, next) => {
    FROM trip
    WHERE trip_ID = '${trip_ID}'
   `
-  db.query(query).then((data) => {res.json(data)}).catch((e) => {console.log(e)})
+  db.query(query).then((data) => {
+    res.json(data)
+  }).catch((e) => { console.log(e) })
 }
 
 module.exports = tripController

@@ -7,6 +7,7 @@ router.post('/', tripController.createTrips, (req, res) => {
 })
 
 router.post('/add', tripController.addMember)
+router.post('/remove', tripController.removeMember)
 
 router.get('/', tripController.getTripsAll)
 router.get('/one', tripController.getTripsOne)
