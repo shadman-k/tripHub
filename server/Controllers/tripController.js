@@ -50,11 +50,16 @@ tripController.removeMember = (req, res, next) => {
   `
 
   db.query(getQuery).then((data) => {
-    const members = data.rows[0].members.length
+    const memberIndex = data.rows[0].members.indexOf(memberUUID)
+    console.log(memberIndex)
+    const newArr = data.rows[0].members
+    newArr.splice(memberIndex, 1)
+
+    console.log(newArr)
 
     const query = `
     UPDATE trip
-    SET members[${members+1}] = '${memberUUID}'
+    SET members = ARRAY['${newArr}']
     WHERE trip_ID = '${trip_ID}'
   `
     db.query(query)
