@@ -1,6 +1,18 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux';
 import * as actions from './actions/actions.js';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link
+} from "react-router-dom";
+
+import NavBar from './components/Navbar.jsx';
+import HomeContainer from './containers/HomeContainer.jsx';
+import TripContainer from './containers/tripContainer.jsx';
+
+import './styles/combined.scss';
 
 const mapStatetoProps = (state) => ({
   user: state.auth.user
@@ -17,11 +29,18 @@ class App extends Component {
 
   render() {
     return (
-      <div>
+      <Router>
+        <NavBar/>
         <p>tripHub</p>
         <p>{this.props.user}</p>
         <button onClick={() => this.props.auth(true)}>click me</button>
-      </div>
+
+        <Switch>
+          <Route path='/home'>
+            Home Page
+          </Route>
+        </Switch>
+      </Router>
     )
   }
 }

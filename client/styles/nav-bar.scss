@@ -1,0 +1,17 @@
+.nav-bar{
+
+  a {
+    margin-left: 3rem;
+    font-size: 16px;
+    color: white;
+    text-decoration: none;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  p {
+    margin-left: auto;
+  }
+}
