@@ -1,0 +1,34 @@
+.home-container {
+  position: relative;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+
+  .all-trips-paper {
+    position: absolute;
+    top: 60px; bottom: 25px; left: 25px; right: 25px;
+    overflow: auto;
+    background-color: #eeeeee;
+  }
+
+  // .trip-grid {
+  //   display: flex;
+  //   flex-wrap: wrap;
+  //   justify-content: left;
+  // }
+
+  .trip-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, max-content));
+    width: 100%;
+    justify-content: center;
+  }
+
+}
