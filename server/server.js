@@ -6,6 +6,7 @@ const PORT = 3000;
 
 //serve static build files
 app.use("/build", express.static(path.join(__dirname, "../build")));
+app.use('/assets', express.static(path.join(__dirname, '../client/assets')));
 
 //handle request to root
 app.get("/", (req, res) => {
