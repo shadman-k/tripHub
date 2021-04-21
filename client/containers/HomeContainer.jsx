@@ -20,6 +20,12 @@ const mapDispatchToProps = {
 };
 
 export class homeContainer extends Component {
+  componentDidMount() {
+    fetch('/getId')
+    .then((data) => data.json())
+    .then((userId) => console.log(userId))
+  }
+
   render() {
     const myTrips = this.props.trips.map((el, i) => {
       return <TripCard name={el.name} dest={el.dest} start={el.start} end={el.end} key={`Trip${i}`}/>
