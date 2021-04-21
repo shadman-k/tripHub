@@ -8,12 +8,11 @@ const clientID = process.env.GOOGLE_CLIENT_ID;
 const clientSecret = process.env.GOOGLE_CLIENT_SECRET;
 
 passport.serializeUser((user, done) => {
-  console.log('serializeUser hits after newUser')
-  done(null, user)
+  return done(null, user[0].google_id);
 });
 
 passport.deserializeUser((id, done) => {
-  User.findById(id, (err, user) => done(err, user));
+  return done(null, id);
 });
 
 passport.use(new GoogleStrategy({
@@ -23,25 +22,25 @@ passport.use(new GoogleStrategy({
     passReqToCallback   : true
   },
   (request, accessToken, refreshToken, profile, done) => {
-    
-    const newUser = {
+
+    const userInfo = {
       googleId: profile.id,
       displayName: profile.displayName,
       email: profile.email,
       image: profile.photos[0].value,
-    }
+    };
+    const googleId = userInfo.googleId;
+    const newUser = Object.values(userInfo);
     
-    // const user = await userController.checkUser(newUser.googleId);
-    // if (!user.length) {
-    //   // add user to database
-    //   // return done
-    // }
-
-    const entry = Object.values(newUser);    
-    userController.addUser(entry)
-    .then((user) => done(null, user))
-    .catch((e) => console.log('error: ', e));
-
-    // return done(null, user);
+    userController.checkUser(googleId)
+      .then(user => {
+        if (!user.length) {
+          userController.addUser(newUser)
+            .then(user => done(null, user))
+            .catch(e => console.log('There was an error invoking addUser in Passport middleware: ', e));
+        }
+        return done(null, user)
+      }).catch(e => console.log('There was an error invoking checkUser in Passport middleware: ', e))
+    
   }
 ));
