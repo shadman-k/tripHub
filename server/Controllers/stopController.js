@@ -40,6 +40,7 @@ stopController.upvote = (req, res, next) => {
 
   db.query(getQuery).then((data) => {
     const response = data.rows[0].upvotes
+    const responseDownvotes = response ? data.rows[0].downvotes.includes(memberUUID) : false;
     const members = response === null ? 0 : response.length;
 
     const query = `
@@ -47,11 +48,29 @@ stopController.upvote = (req, res, next) => {
     SET upvotes[${members+1}] = '${memberUUID}'
     WHERE stop_id = '${stopID}'
   `
-    db.query(query)
+    if (!response.includes(memberUUID)) {
+      db.query(query)
       .then((data) => { res.json(data) })
       .catch((e) => { console.log(e) })
+    }
+    if (responseDownvotes) {
+      const memberIndex = data.rows[0].downvotes.indexOf(memberUUID)
+      const newArr = data.rows[0].downvotes
+      newArr.splice(memberIndex, 1)
+      
+      console.log(newArr)
+      const query = `
+      UPDATE stops
+      SET downvotes = ARRAY['${newArr}']
+      WHERE stop_id = '${stopID}'
+      `
+      db.query(query)
+      .then((data) => { res.json(data) })
+      .catch((e) => { console.log(e)})
+    }
 
   }).catch((e) => { console.log(e) })
+  next()
 }
 
 stopController.downvote = (req, res, next) => {
@@ -62,9 +81,9 @@ stopController.downvote = (req, res, next) => {
    FROM stops
    WHERE stop_id = '${stopID}'
   `
-
   db.query(getQuery).then((data) => {
-    const response = data.rows[0].upvotes
+    const response = data.rows[0].downvotes
+    const responseUpvotes = response ? data.rows[0].upvotes.includes(memberUUID) : false;
     const members = response === null ? 0 : response.length;
 
     const query = `
@@ -75,8 +94,30 @@ stopController.downvote = (req, res, next) => {
     db.query(query)
       .then((data) => { res.json(data) })
       .catch((e) => { console.log(e) })
+    
+    if (!response.includes(memberUUID)) {
+      db.query(query)
+      .then((data) => { res.json(data) })
+      .catch((e) => { console.log(e) })
+    }
+    if (responseUpvotes) {
+      const memberIndex = data.rows[0].upvotes.indexOf(memberUUID)
+      const newArr = data.rows[0].upvotes
+      newArr.splice(memberIndex, 1)
+      
+      console.log(newArr)
+      const query = `
+      UPDATE stops
+      SET upvotes = ARRAY['${newArr}']
+      WHERE stop_id = '${stopID}'
+      `
+      db.query(query)
+      .then((data) => { res.json(data) })
+      .catch((e) => { console.log(e)})
+    }
 
   }).catch((e) => { console.log(e) })
+  next()
 }
 
 module.exports = stopController;
