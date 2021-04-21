@@ -3,6 +3,7 @@ const path = require('path');
 const app = express();
 const mongoose = require('mongoose')
 const tripsRouter = require('./Routes/tripsRouter.js');
+const stopsRouter = require('./Routes/stopsRouter.js');
 const cookieParser = require('cookie-parser');
 const cors = require('cors')
 
@@ -23,6 +24,7 @@ const PORT = 3000;
 
 //Route to DB actions
 app.use('/trips', tripsRouter)
+app.use('/stops', stopsRouter)
 
 //serve static build files
 app.use("/build", express.static(path.join(__dirname, "../build")));
