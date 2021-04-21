@@ -1,4 +1,5 @@
 export const AUTHENTICATE = 'AUTHENTICATE';
+export const GETUSERID = 'GETUSERID';
 
 export const NEWTRIP = 'NEWTRIP';
 

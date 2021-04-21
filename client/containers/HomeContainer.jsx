@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { withStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import moment from 'moment';
 
@@ -11,15 +10,18 @@ import NewTrip from '../components/NewTrip.jsx'
 
 const mapStateToProps = (state) => ({
   modalState: state.newTrip.open,
-  trips: state.trips.trips
+  trips: state.trips.trips,
+  userId: state.auth.userId
 });
 
 const mapDispatchToProps = {
   modalToggle: (open) => actions.newTrip(open),
-  addTrip: (tripInfo) => actions.addTrip(tripInfo)
+  addTrip: (tripInfo) => actions.addTrip(tripInfo),
+  getUserId: (userId) => actions.getUserId(userId)
 };
 
 export class homeContainer extends Component {
+
   render() {
     const myTrips = this.props.trips.map((el, i) => {
       return <TripCard name={el.name} dest={el.dest} start={el.start} end={el.end} key={`Trip${i}`}/>
