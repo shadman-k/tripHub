@@ -14,6 +14,12 @@ const mapDispatchToProps = {
 };
 
 export class homeContainer extends Component {
+  componentDidMount() {
+    fetch('/getId')
+    .then((data) => data.json())
+    .then((userId) => console.log(userId))
+  }
+
   render() {
     let trips = [];
     for(let i = 0; i < 29; i++){

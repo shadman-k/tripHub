@@ -4,10 +4,11 @@ const path = require('path');
 const app = express();
 const session = require('express-session');
 const mongoose = require('mongoose')
-const tripsRouter = require('./Routes/tripsRouter.js');
-const googleRoute = require('./Routes/googleAuthRoute');
 const cookieParser = require('cookie-parser');
 const cors = require('cors')
+const tripsRouter = require('./Routes/tripsRouter.js');
+const googleRoute = require('./Routes/googleAuthRoute');
+const { ensureAuth, ensureGuest } = require('./middleware/auth');
 require('./passport-setup');
 require('dotenv').config();
 const PORT = 3000;
@@ -50,8 +51,13 @@ app.use('/google', googleRoute);
 // oauth failure redirects to /fail and sends a failure message
 app.get('/fail', (req, res) => res.send('You failed to log in.'));
 
+app.get('/getId', (req, res) => res.send(req.user));
+
 // oauth success redirects to /home 
-app.get('/home', (req, res) => res.send('Welcome to TripHub!'));
+app.get('/success', (req, res) => res.redirect('/home'));
+app.get('/home', ensureAuth, (req, res) => {
+  res.sendFile(path.join(__dirname, "../index.html"));
+});
 
 // global error handler
 app.use((err, req, res, next) => {

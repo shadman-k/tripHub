@@ -34,6 +34,7 @@ passport.use(new GoogleStrategy({
     
     userController.checkUser(googleId)
       .then(user => {
+        console.log(user);
         if (!user.length) {
           userController.addUser(newUser)
             .then(user => done(null, user))

@@ -13,7 +13,7 @@ router.get('/',
 // GET: /google/callback
 router.get('/callback',
     passport.authenticate( 'google', {
-        successRedirect: '/home',
+        successRedirect: '/success',
         failureRedirect: '/fail'
 }));
 
