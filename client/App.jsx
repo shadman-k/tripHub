@@ -11,6 +11,7 @@ import {
 import NavBar from './components/Navbar.jsx';
 import HomeContainer from './containers/HomeContainer.jsx';
 import TripContainer from './containers/TripContainer.jsx';
+import LoginContainer from './containers/LoginContainer.jsx';
 
 import './styles/combined.scss';
 
@@ -38,6 +39,9 @@ class App extends Component {
             <Switch>
               <Route path='/home'>
                 <HomeContainer />
+              </Route>
+              <Route path='/'>
+                <LoginContainer />
               </Route>
             </Switch>
           </Router>

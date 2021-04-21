@@ -7,6 +7,8 @@ require('dotenv').config();
 const clientID = process.env.GOOGLE_CLIENT_ID;
 const clientSecret = process.env.GOOGLE_CLIENT_SECRET;
 
+console.log(clientID, clientSecret);
+
 passport.serializeUser((user, done) => {
   return done(null, user[0].google_id);
 });
