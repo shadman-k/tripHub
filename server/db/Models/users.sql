@@ -1,8 +1,6 @@
-CREATE TABLE users (
-  email text,
-  firstName text,
-  lastName text,
-  photo text,
-  accessToken text,
-  refreshToken text
-)
+CREATE TABLE public.people (
+  _id serial PRIMARY KEY NOT NULL,
+  google_id varchar NOT NULL,
+  display_name varchar NOT NULL,
+  email varchar NOT NULL,
+  image varchar NOT NULL);

@@ -1,7 +1,8 @@
 const passport = require('passport');
 const GoogleStrategy = require( 'passport-google-oauth2' ).Strategy;
+// const db = require('./db/index.js');
+const userController = require('./Controllers/userController');
 require('dotenv').config();
-// require database and pg so we can query to it
 
 const clientID = process.env.GOOGLE_CLIENT_ID;
 const clientSecret = process.env.GOOGLE_CLIENT_SECRET;
@@ -21,35 +22,25 @@ passport.use(new GoogleStrategy({
     callbackURL: '/google/callback/',
     passReqToCallback   : true
   },
-  function(request, accessToken, refreshToken, profile, done) {
+  async function(request, accessToken, refreshToken, profile, done) {
+    
     const newUser = {
-      email: profile.email,
-      displayName: profile.displayName,
-      image: profile.photos[0].value,
       googleId: profile.id,
+      displayName: profile.displayName,
+      email: profile.email,
+      image: profile.photos[0].value,
     }
     
-    db.query(statement, Object.values(newUser), (err, result) => {
-      if (err) {
-        return next({
-          log: 'There was an error checking the database for the user',
-          message: {
-            err: 'An error occurred checking the database for the user.'
-          }
-        });
-      } else {
-        if (!result.rows.length) { // if the user is not in the database, add them 
-          console.log('User does not exist in database. Need to add user to the database.');
-          return done(null, result);
-        } else { // if the user is in the database, send back user information and rediret to home page
-          console.log('User found, redirecting to /home');
-          return done(null, result);
-        }
-      }
-    });
+    // const user = await userController.checkUser(newUser.googleId);
+    // if (!user.length) {
+    //   // add user to database
+    //   // return done
+    // }
 
-    console.log('newUser: ', newUser);
-    // console.log('does strategy fire?');
-    return done(null, profile);
+    const entry = Object.values(newUser);
+    const user = await userController.addUser(entry);
+    console.log('user: ', user);
+    
+    // return done(null, profile);
   }
 ));
