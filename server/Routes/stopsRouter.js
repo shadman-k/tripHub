@@ -9,5 +9,6 @@ router.post('/', stopController.createStop, (req, res) => {
 router.get('/', stopController.getStopsOne)
 
 router.post('/upvote', stopController.upvote)
+router.post('/downvote', stopController.downvote)
 
 module.exports = router

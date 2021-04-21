@@ -54,4 +54,29 @@ stopController.upvote = (req, res, next) => {
   }).catch((e) => { console.log(e) })
 }
 
+stopController.downvote = (req, res, next) => {
+  const { memberUUID, stopID } = req.body;
+
+  const getQuery = `
+   SELECT *
+   FROM stops
+   WHERE stop_id = '${stopID}'
+  `
+
+  db.query(getQuery).then((data) => {
+    const response = data.rows[0].upvotes
+    const members = response === null ? 0 : response.length;
+
+    const query = `
+    UPDATE stops
+    SET downvotes[${members+1}] = '${memberUUID}'
+    WHERE stop_id = '${stopID}'
+  `
+    db.query(query)
+      .then((data) => { res.json(data) })
+      .catch((e) => { console.log(e) })
+
+  }).catch((e) => { console.log(e) })
+}
+
 module.exports = stopController;
