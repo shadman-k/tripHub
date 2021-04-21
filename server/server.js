@@ -4,6 +4,8 @@ const path = require('path');
 const app = express();
 const session = require('express-session');
 const mongoose = require('mongoose')
+const tripsRouter = require('./Routes/tripsRouter.js');
+const stopsRouter = require('./Routes/stopsRouter.js');
 const cookieParser = require('cookie-parser');
 const cors = require('cors')
 const tripsRouter = require('./Routes/tripsRouter.js');
@@ -30,6 +32,7 @@ app.use('/assets', express.static(path.join(__dirname, '../client/assets')));
 
 // Route to DB actions
 app.use('/trips', tripsRouter)
+app.use('/stops', stopsRouter)
 
 // handle request to root
 app.get('/', (req, res) => {
