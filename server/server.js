@@ -13,6 +13,10 @@ app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "../index.html"));
 });
 
+app.get("/home", (req, res) => {
+  res.sendFile(path.join(__dirname, "../index.html"));
+});
+
 // global error handler
 app.use((err, req, res, next) => {
   const defaultErr = {
