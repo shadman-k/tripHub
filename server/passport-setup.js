@@ -39,8 +39,9 @@ passport.use(new GoogleStrategy({
 
     const entry = Object.values(newUser);
     const user = await userController.addUser(entry);
+    const userCopy = user.map((el) => el);
+    console.log('userCopy: ', userCopy);
     console.log('user: ', user);
-    
     // return done(null, profile);
   }
 ));
