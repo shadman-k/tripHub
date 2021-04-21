@@ -2,51 +2,37 @@ const express = require('express');
 const passport = require('passport');
 const path = require('path');
 const app = express();
-const cookieSession = require('cookie-session')
-require('../passport-setup');
+const session = require('express-session');
+require('./passport-setup');
 
 const PORT = 3000;
+app.use('/build', express.static(path.join(__dirname, "../build")));
 
-//serve static build files
-app.use("/build", express.static(path.join(__dirname, "../build")));
-
-app.use(passport.initialize());
-app.use(passport.session());
-
-app.use(cookieSession({
-  name: 'triphub-session',
-  keys: ['key1', 'key2']
-}))
+// routes
+const googleRoute = require('./routes/googleAuthRoute');
 
 //handle request to root
-app.get("/", (req, res) => {
+app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, "../index.html"));
 });
 
-app.get('/', (req, res) => {
-  res.send('You are not logged in.');
-})
+// sessions
+app.use(session({
+  secret: 'keyboard cat',
+  resave: false,
+  saveUninitialized: false,
+}))
 
-// google oauth 
-app.get('/google',
-  passport.authenticate('google', { scope:
-      [ 'email', 'profile' ] }
-));
+// passport middleware
+app.use(passport.initialize());
+app.use(passport.session());
+app.use('/google', googleRoute);
 
-app.get('/google/callback',
-    passport.authenticate( 'google', {
-        successRedirect: '/success',
-        failureRedirect: '/fail'
-}));
-
+// oauth failure redirects to /fail and sends a failure message
 app.get('/fail', (req, res) => res.send('You failed to log in.'));
-app.get('/success', (req, res) => res.send('Welcome to TripHub!'));
 
-app.get('/logout', (req, res) => {
-  req.session = null;
-  req.logout();
-  res.redirect('/');
-})
+// oauth success redirects to /home 
+app.get('/home', (req, res) => res.send('Welcome to TripHub!'));
 
 // global error handler
 app.use((err, req, res, next) => {
