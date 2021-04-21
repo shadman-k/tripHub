@@ -26,15 +26,14 @@ userController.checkUser = (entry) => {
 
 userController.addUser = (entry) => {
 
-  console.log('entry: ', entry);
+  // console.log('entry: ', entry);
   const statement = `INSERT INTO people (google_id, display_name, email, image) VALUES($1, $2, $3, $4) RETURNING *`;
-  
-  db.query(statement, entry, async (err, result) => {
-    console.log('result from query: ', result.rows);
-    if (err) console.log('There was an error with addUser: ', err);
-    else return await result.rows;
-  });
 
+  return db.query(statement, entry)
+  .then((data) => {
+    return data.rows
+  })
+  .catch(err => console.log('error from addUser: ', err))
 }
 
 module.exports = userController;

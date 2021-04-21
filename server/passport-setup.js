@@ -1,7 +1,7 @@
 const passport = require('passport');
 const GoogleStrategy = require( 'passport-google-oauth2' ).Strategy;
 // const db = require('./db/index.js');
-const userController = require('./Controllers/userController');
+const userController = require('./Controllers/googleController');
 require('dotenv').config();
 
 const clientID = process.env.GOOGLE_CLIENT_ID;
@@ -9,7 +9,7 @@ const clientSecret = process.env.GOOGLE_CLIENT_SECRET;
 
 passport.serializeUser((user, done) => {
   console.log('serializeUser hits after newUser')
-  done(null, profile.id)
+  done(null, user)
 });
 
 passport.deserializeUser((id, done) => {
@@ -19,10 +19,10 @@ passport.deserializeUser((id, done) => {
 passport.use(new GoogleStrategy({
     clientID: clientID,
     clientSecret: clientSecret,
-    callbackURL: '/google/callback/',
+    callbackURL: 'http://localhost:8080/google/callback/',
     passReqToCallback   : true
   },
-  async function(request, accessToken, refreshToken, profile, done) {
+  (request, accessToken, refreshToken, profile, done) => {
     
     const newUser = {
       googleId: profile.id,
@@ -37,11 +37,11 @@ passport.use(new GoogleStrategy({
     //   // return done
     // }
 
-    const entry = Object.values(newUser);
-    const user = await userController.addUser(entry);
-    const userCopy = user.map((el) => el);
-    console.log('userCopy: ', userCopy);
-    console.log('user: ', user);
-    // return done(null, profile);
+    const entry = Object.values(newUser);    
+    userController.addUser(entry)
+    .then((user) => done(null, user))
+    .catch((e) => console.log('error: ', e));
+
+    // return done(null, user);
   }
 ));
