@@ -4,5 +4,8 @@ CREATE TABLE stops (
   groupID text,
   tripID text,
   createdBy text,
-  googleMapsID text
+  googleMapsID text,
+  upvotes text[],
+  downvotes text[],
+  stop_ID uuid
 )
