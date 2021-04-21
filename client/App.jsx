@@ -1,23 +1,53 @@
 import React, { Component } from 'react'
-// import { Link } from 'react-router-dom'
+import { connect } from 'react-redux';
+import * as actions from './actions/actions.js';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link
+} from "react-router-dom";
 
-export default class App extends Component {
+import NavBar from './components/Navbar.jsx';
+import HomeContainer from './containers/HomeContainer.jsx';
+import TripContainer from './containers/TripContainer.jsx';
+
+import './styles/combined.scss';
+
+const mapStatetoProps = (state) => ({
+  user: state.auth.user
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  auth: (isAuthed) => dispatch(actions.authenticate(isAuthed))
+});
+
+class App extends Component {
   constructor(props) {
     super(props);
   }
 
   render() {
     return (
-      <div>
-        <p>tripHub</p>
-        <div className="btncontainer btncontainer-fb">
-          {/* <Link to='/auth/facebook' className='btn-facebook'> */}
-          <a href="/auth/facebook" className="btn-fb">
-            Sign in with Facebook
-          </a>
-          {/* </Link> */}
+      <div className='main-container'>
+        <div className='content-wrap'>
+          <Router>
+            <div className='nav-bar-wrap'>
+              <NavBar/>
+            </div>
+            <Switch>
+              <Route path='/home'>
+                <HomeContainer />
+              </Route>
+              <Route path='/trip'>
+                <TripContainer />
+              </Route>
+            </Switch>
+          </Router>
         </div>
       </div>
     )
   }
 }
+
+export default connect(mapStatetoProps, mapDispatchToProps)(App);

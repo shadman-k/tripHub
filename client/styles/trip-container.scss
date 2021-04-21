@@ -1,0 +1,30 @@
+.tripContents {
+  display: flex;
+  justify-content: space-between;
+  width: 80%;
+  margin: 30px auto;
+}
+
+.itineraryContainer{
+  border: 2px dotted black;
+  width: 65%;
+  padding: 10px;
+}
+
+.attendingContainer {
+  border: 2px dotted black;
+  width: 25%;
+  padding: 10px;
+}
+
+.attendee {
+  display: flex;
+  align-items: center;
+}
+
+.profile-pic {
+  height: 22px;
+  width: 22px;
+  border-radius: 50%;
+  margin: 5px;
+}
