@@ -1,7 +1,8 @@
 import * as types from '../constants/actionTypes';
 
 const initialState = {
-  user: 'Username'
+  user: 'Username',
+  userId: null
 }
 
 const authReducer = (state = initialState, action) => {
@@ -12,6 +13,12 @@ const authReducer = (state = initialState, action) => {
         ...state,
         user: 'Rob'
       };
+    }
+    case types.GETUSERID: {
+      return {
+        ...state,
+        userId: action.payload
+      }
     }
     default: {
       return state;
