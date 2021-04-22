@@ -2,10 +2,6 @@ import * as types from '../constants/actionTypes';
 
 const initialState = {
   open: false,
-  name: '',
-  destination: '',
-  startDate: '',
-  endDate: ''
 }
 
 const newTripModalReducer = (state = initialState, action) => {

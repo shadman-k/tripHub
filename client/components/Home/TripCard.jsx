@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
@@ -28,27 +29,29 @@ const useStyles = makeStyles({
 });
 
 export default function SimpleCard(props) {
-  const { name, dest, start, end } = props;
+  const { name, dest, start, end, id } = props;
   const classes = useStyles();
 
   return (
-    <Card className={classes.root}>
-      <CardContent>
-        <Typography variant="h5" component="h2">
-          {name}
-        </Typography>
-        <Typography className={classes.pos} color="textSecondary">
-          {dest}
-        </Typography>
-        <Typography variant="body2" component="p">
-          Start: {start}
-          <br />
-          End: {end}
-        </Typography>
-      </CardContent>
-      <CardActions>
-        <Button size="small" color='secondary' variant='outlined'>View</Button>
-      </CardActions>
-    </Card>
+    <Link to='/trip'>
+      <Card className={classes.root}>
+        <CardContent>
+          <Typography variant="h5" component="h2">
+            {name}
+          </Typography>
+          <Typography className={classes.pos} color="textSecondary">
+            {dest}
+          </Typography>
+          <Typography variant="body2" component="p">
+            Start: {start}
+            <br />
+            End: {end}
+          </Typography>
+        </CardContent>
+        <CardActions>
+          <Button size="small" color='secondary' variant='outlined'>View</Button>
+        </CardActions>
+      </Card>
+    </Link>
   );
 }

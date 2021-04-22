@@ -4,10 +4,10 @@ const path = require('path');
 const app = express();
 const session = require('express-session');
 const mongoose = require('mongoose')
-const stopsRouter = require('./Routes/stopsRouter.js');
+const stopsRouter = require('./Routes/stopsRouter');
+const tripsRouter = require('./Routes/tripsRouter');
 const cookieParser = require('cookie-parser');
 const cors = require('cors')
-const tripsRouter = require('./Routes/tripsRouter.js');
 const googleRoute = require('./Routes/googleAuthRoute');
 const { ensureAuth, ensureGuest } = require('./middleware/auth');
 require('./passport-setup');
@@ -64,6 +64,9 @@ app.get("/home", (req, res) => {
 });
 
 app.get('/getId', (req, res) => res.send(req.user));
+app.get("/trip", (req, res) => {
+  res.sendFile(path.join(__dirname, "../index.html"));
+});
 
 // global error handler
 app.use((err, req, res, next) => {
