@@ -5,14 +5,28 @@ const stopController = {};
 
 stopController.createStop = (req, res, next) => {
   const { stop_name, destination, groupID, tripID, createdBy, googleMapsID, upvotes, downvotes } = req.body
+
+  const newUUID = uuidv4();
   
   const query = `
   INSERT INTO stops(stops_name, destination, groupID, tripID, createdBy, googleMapsID, stop_ID)
   VALUES ($1, $2, $3, $4, $5, $6, $7)
   `
 
-  db.query(query, [stop_name, destination, groupID, tripID, createdBy, googleMapsID, uuidv4()])
-    .then((data) => res.json(data)).catch((e) => { console.log(e) })
+  db.query(query, [stop_name, destination, groupID, tripID, createdBy, googleMapsID, newUUID])
+    .then(() => {
+      const query = `
+      SELECT *
+      FROM stops
+      WHERE stop_ID = '${newUUID}'
+      `
+
+      db.query(query).then((data) => {
+        res.json(data)
+      }).catch((e)=>{console.log(e)})
+
+    })
+    .catch((e) => { console.log(e) })
 
 }
 
