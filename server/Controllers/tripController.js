@@ -5,7 +5,7 @@ const tripController = {};
 
 tripController.createTrips = (req, res, next) => {
   const { name, destination, groupID, createdBy, dateStart, dateEnd } = req.body.tripInfo
-  console.log('googleId: ', createdBy)
+  // console.log('googleId: ', createdBy)
   const newUUID = uuidv4();
 
   const query = `
@@ -15,7 +15,7 @@ tripController.createTrips = (req, res, next) => {
 
   db.query(query, [name, destination, groupID, createdBy, dateStart, dateEnd, newUUID])
     .then(() => {
-      console.log("new db")
+      // console.log("new db")
       const query = `
       SELECT *
       FROM trip

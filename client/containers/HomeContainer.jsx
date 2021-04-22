@@ -26,7 +26,6 @@ export class homeContainer extends Component {
     fetch('/getId')
     .then((data) => data.json())
     .then((userInfo) => {
-      // console.log('userId in componentdidmount', userId);
       this.props.getUserId(userInfo.google_id);
       fetch('/trips/getTrips', {
         method: 'POST',
@@ -35,14 +34,13 @@ export class homeContainer extends Component {
           googleId: this.props.userId
         })
       })
-        .then((data) => data.json())
-        .then((trips) => {
-          for (let i = 0; i < trips.length; i++) {
-            console.log(trips[i])
-            this.props.addTrip(trips[i]);
-          }
-        }) 
-      })
+      .then((data) => data.json())
+      .then((trips) => {
+        for (let i = 0; i < trips.length; i++) {
+          this.props.addTrip(trips[i]);
+        }
+      }) 
+    })
   }
 
   render() {
@@ -60,7 +58,6 @@ export class homeContainer extends Component {
         dateEnd: moment(document.getElementById('end-date').value).format('LL'),
         createdBy: this.props.userId
       }
-      console.log('createdBy: ', this.props.userId);
       fetch('/trips', {
         method: 'POST',
         headers: { 'Content-Type' : 'application/json' },
