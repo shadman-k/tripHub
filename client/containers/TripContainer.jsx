@@ -14,6 +14,13 @@ const mapDispatchToProps = {
 };
 
 export class tripContainer extends Component {
+  componentDidMount() {
+    fetch("http://localhost:3000/stops")
+      .then(response => response.json())
+      .then(result => console.log(result.rows))
+      .catch(error => console.log('error', error));
+  }
+
   render() {
     return (
       <div className="tripContents">

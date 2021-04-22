@@ -19,13 +19,13 @@ tripController.createTrips = (req, res, next) => {
       const query = `
       SELECT *
       FROM trip
-      WHERE trip_id = '${newUUID}'` 
+      WHERE trip_id = '${newUUID}'`
 
       db.query(query).then((data) => {
         res.json(data.rows[0])
       }).catch((e) => { console.log(e) })
     }
-    
+
   )
     .catch((e) => { console.log(e)})
 }
@@ -96,27 +96,26 @@ tripController.getTripsAll = (req, res, next) => {
 }
 
 tripController.tripsParser = (req, res, next) => {
-  console.log('tripPraser:', res.locals.uuid)
   const package = [];
   const selectedItems = res.locals.rows
-  
+
   for (let i = 0; i < selectedItems.length; i++) {
     const element = selectedItems[i];
     const members = element.members ? element.members[0].split(',') : '';
-   
+
     if (element.createdby === res.locals.uuid) {
       package.push(element)
     } else if (members.includes(res.locals.uuid)) {
       package.push(element)
     }
-    
+
   }
 
   res.package = package;
   next()
 }
 
-tripController.getTripsCreatedBy = (req, res, next) => {  
+tripController.getTripsCreatedBy = (req, res, next) => {
   const query = `
    SELECT *
    FROM trip
@@ -128,7 +127,7 @@ tripController.getTripsCreatedBy = (req, res, next) => {
   }).catch((e) => { console.log(e) })
 }
 
-tripController.getTripsMemberOf = (req, res, next) => {  
+tripController.getTripsMemberOf = (req, res, next) => {
   const query = `
    SELECT *
    FROM trip
