@@ -1,19 +1,28 @@
 const express = require('express');
+const passport = require('passport');
 const path = require('path');
 const app = express();
+const session = require('express-session');
 const mongoose = require('mongoose')
 const tripsRouter = require('./Routes/tripsRouter.js');
+const stopsRouter = require('./Routes/stopsRouter.js');
 const cookieParser = require('cookie-parser');
 const cors = require('cors')
-
+const tripsRouter = require('./Routes/tripsRouter.js');
+const googleRoute = require('./Routes/googleAuthRoute');
+const { ensureAuth, ensureGuest } = require('./middleware/auth');
+require('./passport-setup');
 require('dotenv').config();
+const PORT = 3000;
 
 app.use(express.json());
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 
-const PORT = 3000;
+//serve static build files
+app.use("/build", express.static(path.join(__dirname, "../build")));
+app.use('/assets', express.static(path.join(__dirname, '../client/assets')));
 
 // //Connect to MongoDB
 // mongoose.connect(`mongodb+srv://${process.env.MONGOUSERNAME}:${process.env.MONGOPASSWORD}@cluster0.rstp6.mongodb.net/googleMaps?retryWrites=true&w=majority`, { useNewUrlParser: true, useUnifiedTopology: true }).catch((e) => console.log(e.message))
@@ -21,15 +30,35 @@ const PORT = 3000;
 //   console.log('Connected to TripHub MongoDB')
 // })
 
-//Route to DB actions
+// Route to DB actions
 app.use('/trips', tripsRouter)
+app.use('/stops', stopsRouter)
 
-//serve static build files
-app.use("/build", express.static(path.join(__dirname, "../build")));
-app.use('/assets', express.static(path.join(__dirname, '../client/assets')));
+// handle request to root
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, "../index.html"));
+});
 
-//handle request to root
-app.get("/", (req, res) => {
+// sessions
+app.use(session({
+  secret: 'keyboard cat',
+  resave: false,
+  saveUninitialized: false,
+}))
+
+// passport middleware
+app.use(passport.initialize());
+app.use(passport.session());
+app.use('/google', googleRoute);
+
+// oauth failure redirects to /fail and sends a failure message
+app.get('/fail', (req, res) => res.send('You failed to log in.'));
+
+app.get('/getId', (req, res) => res.send(req.user));
+
+// oauth success redirects to /home 
+app.get('/success', (req, res) => res.redirect('/home'));
+app.get('/home', ensureAuth, (req, res) => {
   res.sendFile(path.join(__dirname, "../index.html"));
 });
 
@@ -49,7 +78,7 @@ app.use((err, req, res, next) => {
     message: { err: 'An error occurred' },
   }
   const errorObj = Object.assign({}, defaultErr, err);
-  console.log('Error message: ', err);
+  console.log('Error message: ', errorObj.err);
   return res.status(errorObj.status).json(errorObj.message);
 });
 
