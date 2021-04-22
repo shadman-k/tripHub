@@ -1,3 +1,5 @@
+$trip-containers: rgb(231, 231, 231);
+
 .tripContents {
   display: flex;
   justify-content: center;
@@ -9,10 +11,10 @@
 .itineraryContainer{
   // border: 2px dotted black;
   width: 50%;
-  padding: 10px;
-  margin: 0px 40px;
-  // overflow: scroll;
-  background-color: rgb(255, 255, 255);
+  padding: 25px;
+  margin: 0px 40px 30px 40px;
+  background-color: $trip-containers;
+  border-radius: 5px;
 }
 
 .attendingContainer {
@@ -21,7 +23,7 @@
   height: 50%;
   padding: 10px 25px;
   padding-bottom: 30px;
-  background-color: rgb(255, 255, 255);
+  background-color: $trip-containers;
   border-radius: 5px;
 }
 

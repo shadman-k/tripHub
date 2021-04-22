@@ -8,7 +8,6 @@ const tripsRouter = require('./Routes/tripsRouter.js');
 const stopsRouter = require('./Routes/stopsRouter.js');
 const cookieParser = require('cookie-parser');
 const cors = require('cors')
-const tripsRouter = require('./Routes/tripsRouter.js');
 const googleRoute = require('./Routes/googleAuthRoute');
 const { ensureAuth, ensureGuest } = require('./middleware/auth');
 require('./passport-setup');
@@ -56,7 +55,7 @@ app.get('/fail', (req, res) => res.send('You failed to log in.'));
 
 app.get('/getId', (req, res) => res.send(req.user));
 
-// oauth success redirects to /home 
+// oauth success redirects to /home
 app.get('/success', (req, res) => res.redirect('/home'));
 app.get('/home', ensureAuth, (req, res) => {
   res.sendFile(path.join(__dirname, "../index.html"));
