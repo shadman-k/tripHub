@@ -1,20 +1,28 @@
 .tripContents {
   display: flex;
-  justify-content: space-between;
-  width: 80%;
+  justify-content: center;
+  width: 75%;
   margin: 30px auto;
+  // overflow: scroll;
 }
 
 .itineraryContainer{
-  border: 2px dotted black;
-  width: 65%;
+  // border: 2px dotted black;
+  width: 50%;
   padding: 10px;
+  margin: 0px 40px;
+  // overflow: scroll;
+  background-color: rgb(255, 255, 255);
 }
 
 .attendingContainer {
-  border: 2px dotted black;
+  // border: 2px dotted black;
   width: 25%;
-  padding: 10px;
+  height: 50%;
+  padding: 10px 25px;
+  padding-bottom: 30px;
+  background-color: rgb(255, 255, 255);
+  border-radius: 5px;
 }
 
 .attendee {
@@ -23,8 +31,13 @@
 }
 
 .profile-pic {
-  height: 22px;
-  width: 22px;
+  height: 30px;
+  width: 30px;
   border-radius: 50%;
   margin: 5px;
+}
+
+.item {
+  margin: 10px 0px;
+  padding: 15px 20px;
 }

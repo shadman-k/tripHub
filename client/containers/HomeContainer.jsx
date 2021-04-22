@@ -6,8 +6,8 @@ import moment from 'moment';
 
 import * as actions from '../actions/actions.js';
 
-import TripCard from '../components/TripCard.jsx';
-import NewTrip from '../components/NewTrip.jsx'
+import TripCard from '../components/Home/TripCard.jsx';
+import NewTrip from '../components/Home/NewTrip.jsx'
 
 const mapStateToProps = (state) => ({
   modalState: state.newTrip.open,

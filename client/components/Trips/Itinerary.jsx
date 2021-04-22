@@ -13,7 +13,7 @@ export default function Itinerary() {
       <h3>
         Itinerary
       </h3>
-      <div className="item">
+      <div className="items">
         { items }
       </div>
     </div>

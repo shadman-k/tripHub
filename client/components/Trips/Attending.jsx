@@ -1,5 +1,6 @@
 import React from 'react'
 import Attendee from './Attendee.jsx'
+import Paper from '@material-ui/core/Paper';
 
 export default function Attending() {
   let attendees = [];
