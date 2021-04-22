@@ -35,23 +35,23 @@ export default function SimpleCard(props) {
   return (
     <Link to='/trip'>
       <Card className={classes.root}>
-      <CardContent>
-        <Typography variant="h5" component="h2">
-          {name}
-        </Typography>
-        <Typography className={classes.pos} color="textSecondary">
-          {dest}
-        </Typography>
-        <Typography variant="body2" component="p">
-          Start: {start}
-          <br />
-          End: {end}
-        </Typography>
-      </CardContent>
-      {/* <CardActions>
-        <Button size="small" color='secondary' variant='outlined'>View</Button>
-      </CardActions> */}
-    </Card>
+        <CardContent>
+          <Typography variant="h5" component="h2">
+            {name}
+          </Typography>
+          <Typography className={classes.pos} color="textSecondary">
+            {dest}
+          </Typography>
+          <Typography variant="body2" component="p">
+            Start: {start}
+            <br />
+            End: {end}
+          </Typography>
+        </CardContent>
+        <CardActions>
+          <Button size="small" color='secondary' variant='outlined'>View</Button>
+        </CardActions>
+      </Card>
     </Link>
   );
 }

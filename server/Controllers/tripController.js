@@ -4,8 +4,8 @@ const uuidv4 =require('uuid').v4;
 const tripController = {};
 
 tripController.createTrips = (req, res, next) => {
-  const { name, destination, groupID, createdBy, dateStart, dateEnd } = req.body
-  
+  const { name, destination, groupID, createdBy, dateStart, dateEnd } = req.body.tripInfo
+  // console.log('googleId: ', createdBy)
   const newUUID = uuidv4();
 
   const query = `
@@ -15,14 +15,14 @@ tripController.createTrips = (req, res, next) => {
 
   db.query(query, [name, destination, groupID, createdBy, dateStart, dateEnd, newUUID])
     .then(() => {
-      console.log("new db")
+      // console.log("new db")
       const query = `
       SELECT *
       FROM trip
       WHERE trip_id = '${newUUID}'` 
 
       db.query(query).then((data) => {
-        res.json(data)
+        res.json(data.rows[0])
       }).catch((e) => { console.log(e) })
     }
     
@@ -96,7 +96,7 @@ tripController.getTripsAll = (req, res, next) => {
 }
 
 tripController.tripsParser = (req, res, next) => {
-  console.log(res.locals.uuid)
+  console.log('tripPraser:', res.locals.uuid)
   const package = [];
   const selectedItems = res.locals.rows
   
@@ -110,7 +110,6 @@ tripController.tripsParser = (req, res, next) => {
       package.push(element)
     }
     
-
   }
 
   res.package = package;

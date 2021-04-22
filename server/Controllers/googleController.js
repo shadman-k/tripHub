@@ -4,7 +4,7 @@ const userController = {};
 
 userController.checkUser = (entry) => {
 
-  const statement = `SELECT _id, google_id, display_name, email, image FROM people WHERE google_id = $1`
+  const statement = `SELECT _id, google_id, display_name, email, image FROM people WHERE email = $1`
   const google_id = [entry];
 
   return db.query(statement, google_id)

@@ -4,8 +4,8 @@ const path = require('path');
 const app = express();
 const session = require('express-session');
 const mongoose = require('mongoose')
-const tripsRouter = require('./Routes/tripsRouter.js');
-const stopsRouter = require('./Routes/stopsRouter.js');
+const stopsRouter = require('./Routes/stopsRouter');
+const tripsRouter = require('./Routes/tripsRouter');
 const cookieParser = require('cookie-parser');
 const cors = require('cors')
 const googleRoute = require('./Routes/googleAuthRoute');
@@ -53,8 +53,6 @@ app.use('/google', googleRoute);
 // oauth failure redirects to /fail and sends a failure message
 app.get('/fail', (req, res) => res.send('You failed to log in.'));
 
-app.get('/getId', (req, res) => res.send(req.user));
-
 // oauth success redirects to /home 
 app.get('/success', (req, res) => res.redirect('/home'));
 app.get('/home', ensureAuth, (req, res) => {
@@ -65,6 +63,8 @@ app.get("/home", (req, res) => {
   res.sendFile(path.join(__dirname, "../index.html"));
 });
 
+app.get('/getId', (req, res) => res.json(req.user));
+// app.get('/getId', (req, res) => console.log('email to send back: ', req.user));
 app.get("/trip", (req, res) => {
   res.sendFile(path.join(__dirname, "../index.html"));
 });
@@ -85,6 +85,5 @@ app.use((err, req, res, next) => {
 app.listen(PORT, () => {
   console.log(`Listening on port ${PORT}...`);
 });
-
 
 module.export = app;

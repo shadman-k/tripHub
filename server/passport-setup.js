@@ -6,11 +6,9 @@ require('dotenv').config();
 
 const clientID = process.env.GOOGLE_CLIENT_ID;
 const clientSecret = process.env.GOOGLE_CLIENT_SECRET;
-console.log(clientID);
-console.log(clientSecret);
 
 passport.serializeUser((user, done) => {
-  return done(null, user[0].google_id);
+  return done(null, user[0]);
 });
 
 passport.deserializeUser((id, done) => {
@@ -31,12 +29,11 @@ passport.use(new GoogleStrategy({
       email: profile.email,
       image: profile.photos[0].value,
     };
-    const googleId = userInfo.googleId;
+    const email = userInfo.email;
     const newUser = Object.values(userInfo);
     
-    userController.checkUser(googleId)
+    userController.checkUser(email)
       .then(user => {
-        console.log(user);
         if (!user.length) {
           userController.addUser(newUser)
             .then(user => done(null, user))
