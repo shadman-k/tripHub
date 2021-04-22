@@ -9,13 +9,13 @@ const tripsReducer = (state = initialState, action) => {
     case types.ADDTRIP: {
       const newTrip = {
         name: action.payload.name,
-        destination: action.payload.dest,
-        dateStart: action.payload.start,
-        dateEnd: action.payload.end,
+        destination: action.payload.destination,
+        dateStart: action.payload.dateStart,
+        dateEnd: action.payload.dateEnd,
         createdBy: action.payload.createdBy
       }
       const trips = state.trips.slice();
-      trips.push(newTrip);
+      trips.unshift(newTrip);
       return {
         ...state,
         trips: trips,

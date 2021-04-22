@@ -33,7 +33,8 @@ export class homeContainer extends Component {
 
   render() {
     const myTrips = this.props.trips.map((el, i) => {
-      return <TripCard name={el.name} dest={el.dest} start={el.start} end={el.end} key={`Trip${i}`}/>
+      console.log(el);
+      return <TripCard name={el.name} dest={el.destination} start={el.dateStart} end={el.dateEnd} key={`Trip${i}`}/>
     })
 
     const submitNewTrip = () => {
