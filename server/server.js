@@ -8,7 +8,6 @@ const tripsRouter = require('./Routes/tripsRouter.js');
 const stopsRouter = require('./Routes/stopsRouter.js');
 const cookieParser = require('cookie-parser');
 const cors = require('cors')
-const tripsRouter = require('./Routes/tripsRouter.js');
 const googleRoute = require('./Routes/googleAuthRoute');
 const { ensureAuth, ensureGuest } = require('./middleware/auth');
 require('./passport-setup');
