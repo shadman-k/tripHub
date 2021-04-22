@@ -21,6 +21,15 @@ const mapDispatchToProps = {
 };
 
 export class homeContainer extends Component {
+  
+  componentDidMount() {
+    fetch('/getId')
+    .then((data) => data.json())
+    .then((userId) => {
+      this.props.getUserId(userId);
+    })
+    .then(() => console.log(this.props.userId));
+  }
 
   render() {
     const myTrips = this.props.trips.map((el, i) => {
@@ -30,10 +39,11 @@ export class homeContainer extends Component {
     const submitNewTrip = () => {
       const tripInfo = {
         name: document.getElementById('name-of-trip').value,
-        dest: document.getElementById('destination').value,
-        start: moment(document.getElementById('start-date').value).format('LL'),
-        end: moment(document.getElementById('end-date').value).format('LL')
-      } 
+        destination: document.getElementById('destination').value,
+        dateStart: moment(document.getElementById('start-date').value).format('LL'),
+        dateEnd: moment(document.getElementById('end-date').value).format('LL'),
+        createdBy: this.props.userId
+      }
       this.props.addTrip(tripInfo);
     };
 

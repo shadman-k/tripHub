@@ -28,7 +28,7 @@ const useStyles = makeStyles({
 });
 
 export default function SimpleCard(props) {
-  const { name, dest, start, end } = props;
+  const { name, dest, start, end, id } = props;
   const classes = useStyles();
 
   return (
