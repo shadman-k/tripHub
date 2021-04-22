@@ -8,11 +8,14 @@ const tripsReducer = (state = initialState, action) => {
   switch(action.type){
     case types.ADDTRIP: {
       const newTrip = {
-        name: action.payload.name,
+        trip_name: action.payload.trip_name,
         destination: action.payload.destination,
-        dateStart: action.payload.dateStart,
-        dateEnd: action.payload.dateEnd,
-        createdBy: action.payload.createdBy
+        datestart: action.payload.datestart,
+        dateend: action.payload.dateend,
+        createdby: action.payload.createdby,
+        trip_id: action.payload.trip_id,
+        members: action.payload.members,
+        list_of_stops: action.payload.lists_of_stops
       }
       const trips = state.trips.slice();
       trips.unshift(newTrip);

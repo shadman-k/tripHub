@@ -29,11 +29,11 @@ const useStyles = makeStyles({
 });
 
 export default function SimpleCard(props) {
-  const { name, dest, start, end, id } = props;
+  const { name, dest, start, end, tripId } = props;
   const classes = useStyles();
 
   return (
-    <Link to='/trip'>
+    <Link to={`/trip/${tripId}`}>
       <Card className={classes.root}>
         <CardContent>
           <Typography variant="h5" component="h2">
