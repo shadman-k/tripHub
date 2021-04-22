@@ -39,6 +39,9 @@ class App extends Component {
               <Route path='/home'>
                 <HomeContainer />
               </Route>
+              <Route path='/trip'>
+                <TripContainer />
+              </Route>
             </Switch>
           </Router>
         </div>
