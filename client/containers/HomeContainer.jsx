@@ -45,8 +45,9 @@ export class homeContainer extends Component {
 
   render() {
     const myTrips = this.props.trips.map((el, i) => {
-      console.log(el);
-      return <TripCard name={el.name} dest={el.destination} start={el.dateStart} end={el.dateEnd} key={`Trip${i}`}/>
+      const dateStart = moment(el.datestart).format('LL');
+      const dateEnd = moment(el.dateend).format('LL');
+      return <TripCard name={el.trip_name} dest={el.destination} start={dateStart} end={dateEnd} tripId={el.trip_id} key={`Trip${i}`}/>
     })
 
     const submitNewTrip = () => {
@@ -58,6 +59,7 @@ export class homeContainer extends Component {
         dateEnd: moment(document.getElementById('end-date').value).format('LL'),
         createdBy: this.props.userId
       }
+      this.props.modalToggle(!this.props.modalState);
       fetch('/trips', {
         method: 'POST',
         headers: { 'Content-Type' : 'application/json' },
