@@ -1,7 +1,9 @@
 import * as types from '../constants/actionTypes';
 
 const initialState = {
-  trips: []
+  trips: [],
+  currTrip: null,
+  stops: []
 }
 
 const tripsReducer = (state = initialState, action) => {
@@ -24,12 +26,37 @@ const tripsReducer = (state = initialState, action) => {
         trips: trips,
       };
     }
-    case types.GETTRIPS: {
-      //FETCH TRIPS HERE
-
+    case types.SETCURRTRIP: {
       return {
         ...state,
-        trips: []
+        currTrip: action.payload
+      }
+    }
+    case types.ADDSTOP: {
+      const newStop = {
+        createdby: action.payload.createdby,
+        destination: action.payload.destination,
+        downvotes: action.payload.downvotes,
+        googlemapsid: action.payload.googlemapsid,
+        groupid: action.payload.groupid,
+        stop_id: action.payload.stop_id,
+        stop_name: action.payload.stops_name,
+        tripid: action.payload.tripid,
+        upvotes: action.payload.upvotes,
+      }
+      const stops = state.stops.slice();
+      stops.push(newStop);
+      return {
+        ...state,
+        stops: stops
+      }
+    }
+    case types.RESET: {
+      return {
+        ...state,
+        trips: [],
+        stops: [],
+        currTrip: null
       }
     }
     default: {

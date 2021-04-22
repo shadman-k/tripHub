@@ -21,6 +21,30 @@ export const addTrip = (tripInfo) => ({
 });
 
 export const getTrips = (userId) => ({
-  types: types.GETTRIPS,
+  type: types.GETTRIPS,
   payload: userId
 });
+
+export const setCurrTrip = (currTripId) => ({
+  type: types.SETCURRTRIP,
+  payload: currTripId
+})
+
+export const setNewStop = (modalState) => ({
+  type: types.NEWSTOP,
+  payload: modalState
+})
+
+export const addStop = (stopInfo) => ({
+  type: types.ADDSTOP,
+  payload: stopInfo
+})
+
+export const reset = () => ({
+  type: types.RESET
+})
+
+export const addMembers = (members) => ({
+  type: types.ADDMEMBERS,
+  payload: members
+})

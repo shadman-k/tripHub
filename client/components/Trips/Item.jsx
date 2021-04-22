@@ -1,6 +1,7 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
+import Typography from '@material-ui/core/Typography';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -10,12 +11,22 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Item(props) {
+  const { name, dest } = props
   const classes = useStyles();
 
   return (
     <Paper elevation={2} className={classes.root}>
       <div className="item">
-        Itinerary Item {props.item}
+      <Typography
+          variant='h5'
+          component='h2'
+          color='textPrimary'
+        >
+          {name}
+        </Typography>
+        <Typography color="textSecondary">
+            {dest}
+          </Typography>
       </div>
     </Paper>
   )

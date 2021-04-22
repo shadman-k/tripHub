@@ -11,17 +11,19 @@ import NewTrip from '../components/Home/NewTrip.jsx'
 const mapStateToProps = (state) => ({
   modalState: state.newTrip.open,
   trips: state.trips.trips,
-  userId: state.auth.userId
+  userId: state.auth.userId,
+  currTrip: state.trips.currTrip
 });
 
 const mapDispatchToProps = {
   modalToggle: (open) => actions.newTrip(open),
   addTrip: (tripInfo) => actions.addTrip(tripInfo),
-  getUserId: (userId) => actions.getUserId(userId)
+  getUserId: (userId) => actions.getUserId(userId),
+  setCurrTrip: (tripId) => actions.setCurrTrip(tripId)
 };
 
 export class homeContainer extends Component {
-  
+
   componentDidMount() {
     fetch('/getId')
     .then((data) => data.json())
@@ -39,7 +41,7 @@ export class homeContainer extends Component {
         for (let i = 0; i < trips.length; i++) {
           this.props.addTrip(trips[i]);
         }
-      }) 
+      })
     })
   }
 
@@ -47,7 +49,7 @@ export class homeContainer extends Component {
     const myTrips = this.props.trips.map((el, i) => {
       const dateStart = moment(el.datestart).format('LL');
       const dateEnd = moment(el.dateend).format('LL');
-      return <TripCard name={el.trip_name} dest={el.destination} start={dateStart} end={dateEnd} tripId={el.trip_id} key={`Trip${i}`}/>
+      return <TripCard name={el.trip_name} dest={el.destination} start={dateStart} end={dateEnd} tripId={el.trip_id} setCurrTrip={this.props.setCurrTrip} key={`Trip${i}`}/>
     })
 
     const submitNewTrip = () => {
@@ -68,9 +70,7 @@ export class homeContainer extends Component {
         })
       })
       .then((data) => data.json())
-      .then((trip) => {
-        console.log('new trip: ', trip)
-      })
+      .then((trip) => this.props.addTrip(trip))
     };
 
     return (

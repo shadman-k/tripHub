@@ -27,11 +27,11 @@ const useStyles = makeStyles({
 });
 
 export default function SimpleCard(props) {
-  const { name, dest, start, end, tripId } = props;
+  const { name, dest, start, end, tripId, setCurrTrip } = props;
   const classes = useStyles();
 
   return (
-    <Link to={`/trip/${tripId}`}>
+    <Link to={`/trip/${tripId}`} onClick={() => setCurrTrip(tripId)}>
       <Card className={classes.root}>
         <CardContent>
           <Typography variant="h5" component="h2">

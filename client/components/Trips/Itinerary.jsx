@@ -1,20 +1,25 @@
 import React from 'react';
 import Item from './Item.jsx'
+import AddNewStop from './AddNewStop.jsx'
 
-export default function Itinerary() {
-  let items = [];
+export default function Itinerary(props) {
+  const { modalState, modalToggle, stops, submitNewStop } = props
 
-  for(let i = 1; i < 10; i++) {
-    items.push(<Item key={`item${i}`} item={i}/>)
-  }
-
+  const myStops = stops.map((el, i) => {
+    console.log('CHECK THIS NOW: ', el);
+    return <Item name={el.stop_name} dest={el.destination} key={`Item${i}`}/>
+  })
+  console.log('STOPS: ', stops);
   return (
     <div>
-      <h3>
-        Itinerary
-      </h3>
+      <div className="itinTitle">
+        <h3>
+          Itinerary
+        </h3>
+        <AddNewStop modalState={modalState} modalToggle={modalToggle} submitNewStop={submitNewStop}/>
+      </div>
       <div className="items">
-        { items }
+        { myStops }
       </div>
     </div>
   )

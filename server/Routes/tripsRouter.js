@@ -6,8 +6,14 @@ router.post('/', tripController.createTrips, (req, res) => {
   res.sendStatus(200).end();
 })
 
-router.post('/addAttendee', tripController.addMember)
+router.post('/addAttendee', tripController.addMember, (req, res) => {
+  return res.json(res.locals.updatedMembers);
+})
 // router.post('/remove', tripController.removeMember)
+
+router.post('/getAttendees', tripController.getMembers, (req, res) => {
+  return res.json(res.locals.members)
+})
 
 // router.get('/', tripController.getTripsAll)
 // router.get('/one', tripController.getTripsOne)

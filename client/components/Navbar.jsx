@@ -7,6 +7,7 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
+import * as actions from '../actions/actions.js';
 
 // const styles = (theme) => ({
 //   root: {
@@ -24,7 +25,9 @@ const mapStateToProps = (state) => ({
   user: state.auth.user,
 });
 
-const mapDispatchToProps = {};
+const mapDispatchToProps = {
+  reset: () => actions.reset()
+};
 
 export class Navbar extends Component {
   render() {
@@ -39,9 +42,6 @@ export class Navbar extends Component {
                 <Tab label="Home" />
               </Tabs>
             </Link>
-            <p>
-              Hello, {this.props.user}
-            </p>
           </Toolbar>
         </AppBar>
       </nav>
@@ -49,5 +49,5 @@ export class Navbar extends Component {
   }
 }
 
-export default 
+export default
   withRouter(connect(mapStateToProps, mapDispatchToProps)(Navbar));

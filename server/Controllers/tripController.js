@@ -30,8 +30,33 @@ tripController.createTrips = (req, res, next) => {
     .catch((e) => { console.log(e)})
 }
 
+tripController.getMembers = (req, res, next) => {
+  // console.log('trip ID: ', req.body.tripInfo);
+  const trip_ID = req.body.tripInfo;
+  const statement = `SELECT members FROM trip WHERE trip_id = '${trip_ID}'`
+  // console.log('query statement: ', statement);
+
+  db.query(statement, (err, result) => {
+    if (err) {
+      return next({
+        log: 'There was an error with the getMembers query.',
+        message: {
+          err: 'An error occurred with the getMembers query.'
+        }
+      });
+    } else {
+      // console.log('all members from getMembers query: ', result.rows[0].members);
+      res.locals.members = result.rows;
+      return next();
+    }
+  })
+};
+
 tripController.addMember = (req, res, next) => {
-  const { memberUUID, trip_ID } = req.body;
+
+  const { attendeeEmail, trip_ID } = req.body;
+  console.log('attendee email: ', attendeeEmail);
+  console.log('trip id: ', trip_ID);
 
   const getQuery = `
    SELECT *
@@ -40,20 +65,26 @@ tripController.addMember = (req, res, next) => {
   `
 
   db.query(getQuery).then((data) => {
-    const response = data.rows[0].members
+    console.log('does this hit?')
+    const response = data.rows[0].members;
     const members = response ? response.length : 0;
 
     const query = `
     UPDATE trip
-    SET members[${members+1}] = '${memberUUID}'
+    SET members[${members+1}] = '${attendeeEmail}'
     WHERE trip_ID = '${trip_ID}'
+    RETURNING *
     `
 
     db.query(query)
-      .then((data) => { res.json(memberUUID) })
+      .then((data) => {
+        console.log(data.rows)
+        res.locals.updatedMembers = data.rows[0].members;
+        return next();
+      })
       .catch((e) => { console.log(e) })
 
-  }).catch((e) => { console.log(e) })
+  }).catch((e) => { console.log('Error with adding member to the database: ', e) })
 
 }
 
