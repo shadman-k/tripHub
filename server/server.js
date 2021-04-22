@@ -63,7 +63,10 @@ app.get("/home", (req, res) => {
   res.sendFile(path.join(__dirname, "../index.html"));
 });
 
-app.get('/getId', (req, res) => res.send(req.user));
+app.get('/getId', (req, res) => {
+  res.json(req.user);
+});
+// app.get('/getId', (req, res) => console.log('email to send back: ', req.user));
 app.get("/trip", (req, res) => {
   res.sendFile(path.join(__dirname, "../index.html"));
 });

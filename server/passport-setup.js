@@ -10,10 +10,14 @@ console.log(clientID);
 console.log(clientSecret);
 
 passport.serializeUser((user, done) => {
-  return done(null, user[0].google_id);
+  console.log('serializeUser: ', user);
+  // return done(null, user[0].google_id);
+  // return done(null, user[0].email);
+  return done(null, user[0]);
 });
 
 passport.deserializeUser((id, done) => {
+  console.log('deserializeUser: ', id)
   return done(null, id);
 });
 
@@ -32,10 +36,10 @@ passport.use(new GoogleStrategy({
       image: profile.photos[0].value,
     };
     // console.log('userInfo: ', userInfo);
-    const googleId = userInfo.googleId;
+    const email = userInfo.email;
     const newUser = Object.values(userInfo);
     
-    userController.checkUser(googleId)
+    userController.checkUser(email)
       .then(user => {
         // console.log(user);
         if (!user.length) {

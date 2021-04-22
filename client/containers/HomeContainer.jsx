@@ -25,10 +25,24 @@ export class homeContainer extends Component {
   componentDidMount() {
     fetch('/getId')
     .then((data) => data.json())
-    .then((userId) => {
-      this.props.getUserId(userId);
-    })
-    .then(() => console.log(this.props.userId));
+    .then((userInfo) => {
+      // console.log('userId in componentdidmount', userId);
+      this.props.getUserId(userInfo.google_id);
+      fetch('/trips/getTrips', {
+        method: 'POST',
+        headers: { 'Content-Type' : 'application/json' },
+        body: JSON.stringify({
+          googleId: this.props.userId
+        })
+      })
+        .then((data) => data.json())
+        .then((trips) => {
+          for (let i = 0; i < trips.length; i++) {
+            console.log(trips[i])
+            this.props.addTrip(trips[i]);
+          }
+        }) 
+      })
   }
 
   render() {
@@ -41,11 +55,23 @@ export class homeContainer extends Component {
       const tripInfo = {
         name: document.getElementById('name-of-trip').value,
         destination: document.getElementById('destination').value,
+        groupID: 1,
         dateStart: moment(document.getElementById('start-date').value).format('LL'),
         dateEnd: moment(document.getElementById('end-date').value).format('LL'),
         createdBy: this.props.userId
       }
-      this.props.addTrip(tripInfo);
+      console.log('createdBy: ', this.props.userId);
+      fetch('/trips', {
+        method: 'POST',
+        headers: { 'Content-Type' : 'application/json' },
+        body: JSON.stringify({
+          tripInfo: tripInfo
+        })
+      })
+      .then((data) => data.json())
+      .then((trip) => {
+        console.log('new trip: ', trip)
+      })
     };
 
     return (

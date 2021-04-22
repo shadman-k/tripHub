@@ -12,9 +12,9 @@ router.post('/addAttendee', tripController.addMember)
 // router.get('/', tripController.getTripsAll)
 // router.get('/one', tripController.getTripsOne)
 
-router.get('/', (req, res, next) => {
+router.post('/getTrips', (req, res, next) => {
   //Solution for UUID
-  res.locals.uuid = "createdByID"
+  res.locals.uuid = req.body.googleId
   next();
 }, tripController.getTripsAll, tripController.tripsParser, (req, res) => {
   res.json(res.package);
