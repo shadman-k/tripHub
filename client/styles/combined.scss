@@ -1,6 +1,7 @@
 @import 'colors';
 @import 'nav-bar';
 @import 'home-container';
+@import 'trip-container';
 
 body, html {
   background-color: aliceblue;
@@ -21,7 +22,7 @@ body, html {
   flex-direction: row;
   height: 100%;
   margin: 0;
-  overflow: hidden;
+  // overflow: hidden;
   width: 100%;
   // border: 5px solid green;
 }

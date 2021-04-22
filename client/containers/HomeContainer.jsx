@@ -5,8 +5,8 @@ import moment from 'moment';
 
 import * as actions from '../actions/actions.js';
 
-import TripCard from '../components/TripCard.jsx';
-import NewTrip from '../components/NewTrip.jsx'
+import TripCard from '../components/Home/TripCard.jsx';
+import NewTrip from '../components/Home/NewTrip.jsx'
 
 const mapStateToProps = (state) => ({
   modalState: state.newTrip.open,
@@ -50,7 +50,7 @@ export class homeContainer extends Component {
     return (
       <div className='home-container'>
         <h2 style={{display: 'flex', justifyContent: 'center', marginBottom: '5px'}}>Trips</h2>
-        <Paper className='all-trips-paper'> 
+        <Paper className='all-trips-paper'>
           <div className='trip-grid'>
             {myTrips}
             <NewTrip modalState={this.props.modalState} modalToggle={this.props.modalToggle} submitNewTrip={submitNewTrip}/>
