@@ -10,12 +10,17 @@ const mapStateToProps = (state) => ({
   currTrip: state.trips.currTrip,
   modalState: state.stops.open,
   stops: state.trips.stops,
-  userId: state.auth.userId
+  userId: state.auth.userId,
+  members: state.members.members,
+  trip_ID: state.trips.currTrip,
+
 });
 
 const mapDispatchToProps = {
   modalToggle: (open) => actions.setNewStop(open),
-  addStop: (stopInfo) => actions.addStop(stopInfo)
+  addStop: (stopInfo) => actions.addStop(stopInfo),
+  addMembers: (members) => actions.addMembers(members)
+
 };
 
 export class tripContainer extends Component {
@@ -35,6 +40,19 @@ export class tripContainer extends Component {
         }
       })
       .catch(error => console.log('error', error));
+
+      fetch('/trips/getAttendees', {
+        method: 'POST',
+        headers: { 'Content-Type' : 'application/json' },
+        body: JSON.stringify({ tripInfo: this.props.trip_ID })
+      })
+      .then((data) => data.json())
+      .then((attendees) => {
+        console.log('all attendees: ', attendees[0].members)
+        this.props.addMembers(attendees[0].members);
+    })
+      .catch((error) => console.log('Error with fetching attendees: ', error))
+
   }
 
   render() {
@@ -66,7 +84,7 @@ export class tripContainer extends Component {
           <Itinerary stops={this.props.stops} modalState={this.props.modalState} modalToggle={this.props.modalToggle} submitNewStop={submitNewStop}/>
         </div>
         <div className="attendingContainer">
-          <Attending />
+          <Attending members={this.props.members}/>
         </div>
       </div>
     )
